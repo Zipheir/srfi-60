@@ -160,7 +160,7 @@ Returns the number of bits in integer {{n}}. If integer is positive, the 1-bits 
 
 <procedure>integer-length n</procedure>
 
-Returns the number of bits neccessary to represent n.
+Returns the number of bits neccessary to represent {{n}}.
 ====== Example:
 <enscript highlight="scheme">
 (integer-length #b10101010)
@@ -176,7 +176,7 @@ Returns the number of bits neccessary to represent n.
 
 <procedure>first-set-bit n</procedure>
 
-Returns the number of factors of two of integer n. This value is also the bit-index of the least-significant `1' bit in n.
+Returns the number of factors of two of integer {{n}}. This value is also the bit-index of the least-significant `1' bit in {{n}}.
 ====== Example
 <enscript highlight="scheme">
 (require 'printf)
