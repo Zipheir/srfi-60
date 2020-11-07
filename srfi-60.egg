@@ -1,8 +1,9 @@
-((egg "srfi-60.egg")
- (files "srfi-60.setup" "srfi-60.meta" "TODO" "srfi-60.scm" "tests/run.scm")
+;;; srfi-60.egg -*- Scheme -*- vim: ft=scheme:
+
+((author "Aubrey Jaffer")
+ (maintainer "Sergey Goldgaber")
  (category data)
- (needs setup-helper)
  (license "Artistic")
- (author "Aubrey Jaffer, ported to hygienic Chicken with test suite by Peter Danenberg")
  (synopsis "Integers as bits")
- (test-depends test format))
+ (test-dependencies test format)
+ (components (extension srfi-60)))
