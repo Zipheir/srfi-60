@@ -38,9 +38,9 @@ In the ```Bitwise Operations```, rather than striving for orthogonal completenes
 
 Although any two of {{logior}}, {{logxor}}, and {{logand}} (in combination with {{lognot}}) are sufficient to generate all the two-input logic functions, having these three means that any nontrivial two-input logical function can be synthesized using just one of these two-input primaries with zero or one calls to {{lognot}}.
 
-{{bitwise-if}} is what SRFI-33 calls bitwise-merge.
+{{bitwise-if}} is what SRFI-33 calls {{bitwise-merge}}.
 
-The SRFI-33 aliases: bitwise-ior, bitwise-xor, bitwise-and, bitwise-not, bitwise-merge, any-bits-set?, and bit-count are also provided.
+The SRFI-33 aliases: bitwise-ior, bitwise-xor, bitwise-and, bitwise-not, {{bitwise-merge}}, any-bits-set?, and bit-count are also provided.
 
 log2-binary-factors (alias first-set-bit) is a useful function which is simple but non-obvious:
 
