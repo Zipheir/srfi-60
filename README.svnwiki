@@ -307,9 +307,9 @@ Returns {{n}} with the order of bits {{start}} to {{end}} reversed.
 
 <procedure>list->integer list</procedure>
 
-list->integer returns an integer formed from the booleans in the list list, which must be a list of booleans. A 1 bit is coded for each {{#t}}; a 0 bit for {{#f}}.
+{{list->integer}} returns an integer formed from the booleans in the list list, which must be a list of booleans. A 1 bit is coded for each {{#t}}; a 0 bit for {{#f}}.
 
-{{integer->list}} and list->integer are inverses so far as equal? is concerned.
+{{integer->list}} and {{list->integer}} are inverses so far as equal? is concerned.
 
 <procedure>booleans->integer bool1 ...</procedure>
 
