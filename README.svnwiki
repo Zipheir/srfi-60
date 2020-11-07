@@ -58,8 +58,7 @@ copy-bit-field; the arguments and purposes being incompatible.
 
 A procedure in {{slib/logical.scm}}, {{logical:rotate}}, rotated a given number of low-order bits by a given number of bits. This function was quite servicable, but I could not name it adequately. I have replaced it with rotate-bit-field with the addition of a {{start}} argument. This new function rotates a given field (from positions {{start}} to {{end}}) within an integer; leaving the rest unchanged.
 
-Another problematic name was {{logical:ones}}, which generated an integer with the least significant {{k}} bits set. Calls to bit-field could have replaced its uses . But the
-definition was so short that I just replaced its uses with:
+Another problematic name was {{logical:ones}}, which generated an integer with the least significant {{k}} bits set. Calls to bit-field could have replaced its uses . But the definition was so short that I just replaced its uses with:
 
 <enscript highlight="scheme">
 (lognot (ash -1 k))
