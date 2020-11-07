@@ -75,32 +75,48 @@ The Lamination and Gray-code functions were moved to [[http://savannah.gnu.org/c
 Bits as Booleans provides the procedures to convert between integers and lists of booleans. There is no comparable facility in SRFI-33.
 === Specification
 ==== Bitwise Operations
-===== Function: logand n1 ...
-===== Function: bitwise-and n1 ...
+
+<procedure>logand n1 ...</procedure>
+
+
+<procedure>bitwise-and n1 ...</procedure>
+
 Returns the integer which is the bit-wise AND of the integer arguments.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (logand #b1100 #b1010) 2)
     => "1000"
 </enscript>
-===== Function: logior n1 ...
-===== Function: bitwise-ior n1 ...
+
+<procedure>logior n1 ...</procedure>
+
+
+<procedure>bitwise-ior n1 ...</procedure>
+
 Returns the integer which is the bit-wise OR of the integer arguments.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (logior #b1100 #b1010) 2)
     => "1110"
 </enscript>
-===== Function: logxor n1 ...
-===== Function: bitwise-xor n1 ...
+
+<procedure>logxor n1 ...</procedure>
+
+
+<procedure>bitwise-xor n1 ...</procedure>
+
 Returns the integer which is the bit-wise XOR of the integer arguments.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (logxor #b1100 #b1010) 2)
     => "110"
 </enscript>
-===== Function: lognot n
-===== Function: bitwise-not n
+
+<procedure>lognot n</procedure>
+
+
+<procedure>bitwise-not n</procedure>
+
 Returns the integer which is the one's-complement of the integer argument.
 ====== Example:
 <enscript highlight="scheme">
@@ -109,11 +125,19 @@ Returns the integer which is the one's-complement of the integer argument.
 (number->string (lognot #b0) 2)
     => "-1"
 </enscript>
-===== Function: bitwise-if mask n0 n1
-===== Function: bitwise-merge mask n0 n1
+
+<procedure>bitwise-if mask n0 n1</procedure>
+
+
+<procedure>bitwise-merge mask n0 n1</procedure>
+
 Returns an integer composed of some bits from integer n0 and some from integer n1. A bit of the result is taken from n0 if the corresponding bit of integer mask is 1 and from n1 if that bit of mask is 0.
-===== Function: logtest j k
-===== Function: any-bits-set? j k
+
+<procedure>logtest j k</procedure>
+
+
+<procedure>any-bits-set? j k</procedure>
+
 <enscript highlight="scheme">
 (logtest j k) == (not (zero? (logand j k)))
 
@@ -121,8 +145,12 @@ Returns an integer composed of some bits from integer n0 and some from integer n
 (logtest #b0100 #b0111) => #t
 </enscript>
 ==== Integer Properties
-===== Function: logcount n
-===== Function: bit-count n
+
+<procedure>logcount n</procedure>
+
+
+<procedure>bit-count n</procedure>
+
 Returns the number of bits in integer n. If integer is positive, the 1-bits in its binary representation are counted. If negative, the 0-bits in its two's-complement binary representation are counted. If 0, 0 is returned.
 ====== Example:
 <enscript highlight="scheme">
@@ -133,7 +161,9 @@ Returns the number of bits in integer n. If integer is positive, the 1-bits in i
 (logcount -2)
     => 1
 </enscript>
-===== Function: integer-length n
+
+<procedure>integer-length n</procedure>
+
 Returns the number of bits neccessary to represent n.
 ====== Example:
 <enscript highlight="scheme">
@@ -144,8 +174,12 @@ Returns the number of bits neccessary to represent n.
 (integer-length #b1111)
     => 4
 </enscript>
-===== Function: log2-binary-factors n
-===== Function: first-set-bit n
+
+<procedure>log2-binary-factors n</procedure>
+
+
+<procedure>first-set-bit n</procedure>
+
 Returns the number of factors of two of integer n. This value is also the bit-index of the least-significant `1' bit in n.
 ====== Example
 <enscript highlight="scheme">
@@ -177,8 +211,12 @@ log2-binary-factors(-15) ==> 0     log2-binary-factors(15) ==> 0
 log2-binary-factors(-16) ==> 4     log2-binary-factors(16) ==> 4
 </enscript>
 ==== Bit Within Word
-===== Function: logbit? index n
-===== Function: bit-set? index n
+
+<procedure>logbit? index n</procedure>
+
+
+<procedure>bit-set? index n</procedure>
+
 ====== Example
 <enscript highlight="scheme">
 (logbit? index n) == (logtest (expt 2 index) n)
@@ -189,7 +227,9 @@ log2-binary-factors(-16) ==> 4     log2-binary-factors(16) ==> 4
 (logbit? 3 #b1101) => #t
 (logbit? 4 #b1101) => #f
 </enscript>
-===== Function: copy-bit index from bit
+
+<procedure>copy-bit index from bit</procedure>
+
 Returns an integer the same as from except in the indexth bit, which is 1 if bit is #t and 0 if bit is #f.
 ====== Example:
 <enscript highlight="scheme">
@@ -198,7 +238,9 @@ Returns an integer the same as from except in the indexth bit, which is 1 if bit
 (number->string (copy-bit 2 #b1111 #f) 2)  => "1011"
 </enscript>
 ==== Field of Bits
-===== Function: bit-field n start end
+
+<procedure>bit-field n start end</procedure>
+
 Returns the integer composed of the start (inclusive) through end (exclusive) bits of n. The startth bit becomes the 0-th bit in the result.
 ====== Example:
 <enscript highlight="scheme">
@@ -207,7 +249,9 @@ Returns the integer composed of the start (inclusive) through end (exclusive) bi
 (number->string (bit-field #b1101101010 4 9) 2)
     => "10110"
 </enscript>
-===== Function: copy-bit-field to from start end
+
+<procedure>copy-bit-field to from start end</procedure>
+
 Returns an integer the same as to except possibly in the start (inclusive) through end (exclusive) bits, which are the same as those of from. The 0-th bit of from becomes the startth bit of the result.
 ====== Example:
 <enscript highlight="scheme">
@@ -218,8 +262,12 @@ Returns an integer the same as to except possibly in the start (inclusive) throu
 (number->string (copy-bit-field #b110100100010000 -1 5 9) 2)
     => "110100111110000"
 </enscript>
-===== Function: ash n count
-===== Function: arithmetic-shift n count
+
+<procedure>ash n count</procedure>
+
+
+<procedure>arithmetic-shift n count</procedure>
+
 Returns an integer equivalent to (inexact->exact (floor (* n (expt 2 count)))).
 ====== Example:
 <enscript highlight="scheme">
@@ -228,7 +276,9 @@ Returns an integer equivalent to (inexact->exact (floor (* n (expt 2 count)))).
 (number->string (ash #b1010 -1) 2)
     => "101"
 </enscript>
-===== Function: rotate-bit-field n count start end
+
+<procedure>rotate-bit-field n count start end</procedure>
+
 Returns n with the bit-field from start to end cyclically permuted by count bits towards high-order.
 ====== Example:
 <enscript highlight="scheme">
@@ -241,7 +291,9 @@ Returns n with the bit-field from start to end cyclically permuted by count bits
 (number->string (rotate-bit-field #b110100100010000 1 5 9) 2)
     => "110100000110000"
 </enscript>
-===== Function: reverse-bit-field n start end
+
+<procedure>reverse-bit-field n start end</procedure>
+
 Returns n with the order of bits start to end reversed.
 ====== Example
 <enscript highlight="scheme">
@@ -249,14 +301,22 @@ Returns n with the order of bits start to end reversed.
     => "e5"
 </enscript>
 ==== Bits as Booleans
-===== Function: integer->list k len
-===== Function: integer->list k
+
+<procedure>integer->list k len</procedure>
+
+
+<procedure>integer->list k</procedure>
+
 integer->list returns a list of len booleans corresponding to each bit of the non-negative integer k. #t is coded for each 1; #f for 0. The len argument defaults to (integer-length k).
-===== Function: list->integer list
+
+<procedure>list->integer list</procedure>
+
 list->integer returns an integer formed from the booleans in the list list, which must be a list of booleans. A 1 bit is coded for each #t; a 0 bit for #f.
 
 integer->list and list->integer are inverses so far as equal? is concerned.
-===== Function: booleans->integer bool1 ...
+
+<procedure>booleans->integer bool1 ...</procedure>
+
 Returns the integer coded by the bool1 ... arguments.
 === Implementation
 [[http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/slib/slib/logical.scm?rev=HEAD&content-type=text/vnd.viewcvs-markup|slib/logical.scm]] implements the integers-as-bits procedures for R4RS or R5RS compliant Scheme implementations.
