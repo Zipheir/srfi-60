@@ -77,7 +77,7 @@ Bits as Booleans provides the procedures to convert between integers and lists o
 
 <procedure>bitwise-and n1 ...</procedure>
 
-Returns the integer which is the bit-wise AND of the integer arguments.
+Returns the integer which is the bit-wise ```AND``` of the integer arguments.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (logand #b1100 #b1010) 2)
@@ -89,7 +89,7 @@ Returns the integer which is the bit-wise AND of the integer arguments.
 
 <procedure>bitwise-ior n1 ...</procedure>
 
-Returns the integer which is the bit-wise OR of the integer arguments.
+Returns the integer which is the bit-wise ```OR``` of the integer arguments.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (logior #b1100 #b1010) 2)
@@ -101,7 +101,7 @@ Returns the integer which is the bit-wise OR of the integer arguments.
 
 <procedure>bitwise-xor n1 ...</procedure>
 
-Returns the integer which is the bit-wise XOR of the integer arguments.
+Returns the integer which is the bit-wise ```XOR``` of the integer arguments.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (logxor #b1100 #b1010) 2)
@@ -113,7 +113,7 @@ Returns the integer which is the bit-wise XOR of the integer arguments.
 
 <procedure>bitwise-not n</procedure>
 
-Returns the integer which is the one's-complement of the integer argument.
+Returns the integer which is the ```one's-complement``` of the integer argument.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (lognot #b10000000) 2)
