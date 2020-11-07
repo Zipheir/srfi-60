@@ -275,7 +275,7 @@ Returns an integer equivalent to {{(inexact->exact (floor (* n (expt 2 count))))
 
 <procedure>rotate-bit-field n count start end</procedure>
 
-Returns n with the bit-field from {{start}} to {{end}} cyclically permuted by count bits towards high-order.
+Returns {{n}} with the bit-field from {{start}} to {{end}} cyclically permuted by count bits towards high-order.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (rotate-bit-field #b0100 3 0 4) 2)
@@ -290,7 +290,7 @@ Returns n with the bit-field from {{start}} to {{end}} cyclically permuted by co
 
 <procedure>reverse-bit-field n start end</procedure>
 
-Returns n with the order of bits {{start}} to {{end}} reversed.
+Returns {{n}} with the order of bits {{start}} to {{end}} reversed.
 ====== Example
 <enscript highlight="scheme">
 (number->string (reverse-bit-field #xa7 0 8) 16)
