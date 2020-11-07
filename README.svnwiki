@@ -2,15 +2,15 @@
 === Abstract
 Treating integers as two's-complement strings of bits is an arcane but important domain of computer science.
 ==== It is used for:
-===== hashing
-===== Galois-field[2] calculations of error-detecting and error-correcting codes
-===== cryptography and ciphers
-===== pseudo-random number generation
-===== register-transfer-level modeling of digital logic designs
-===== Fast-Fourier transforms
-===== packing and unpacking numbers in persistant data structures
-===== space-filling curves with applications to dimension reduction and sparse multi-dimensional database indexes; and
-===== generating approximate seed values for root-finders and transcendental function algorithms.
+* hashing
+* Galois-field[2] calculations of error-detecting and error-correcting codes
+* cryptography and ciphers
+* pseudo-random number generation
+* register-transfer-level modeling of digital logic designs
+* Fast-Fourier transforms
+* packing and unpacking numbers in persistant data structures
+* space-filling curves with applications to dimension reduction and sparse multi-dimensional database indexes; and
+* generating approximate seed values for root-finders and transcendental function algorithms.
 ==== For more information see:
 [[https://srfi.schemers.org/srfi-60/|SRFI 60: Integers as Bits]]
 === Rationale
@@ -317,9 +317,9 @@ Returns the integer coded by the {{bool1}} ... arguments.
 === Implementation
 [[http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/slib/slib/logical.scm?rev=HEAD&content-type=text/vnd.viewcvs-markup|slib/logical.scm]] implements the integers-as-bits procedures for R4RS or R5RS compliant Scheme implementations.
 === Author
-==== Aubrey Jaffer
-==== Ported to hygienic Chicken 3 with test suite by Peter Danenberg
-==== Ported to Chicken 4 by Sergey Goldgaber
+* Aubrey Jaffer
+* Ported to hygienic Chicken 3 with test suite by Peter Danenberg
+* Ported to Chicken 4 by Sergey Goldgaber
 === Copyright
 Copyright (C) Aubrey Jaffer (2004, 2005). All Rights Reserved.
 
@@ -329,6 +329,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 === Version history
-==== 0.4 - Ported to Chicken 5
-==== 0.3 - release version 0.3
-==== 0.2 - adopting trunk/tags directory layout.  Tagging version 0.2.
+* 0.4 - Ported to Chicken 5
+* 0.3 - release version 0.3
+* 0.2 - adopting trunk/tags directory layout.  Tagging version 0.2.
