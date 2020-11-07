@@ -32,7 +32,7 @@ Since we treat integers as having two's-complement negations, the two's-compleme
 (define (lognot n) (- -1 n))
 </enscript>
 === Bitwise Operations and Integer Properties
-The {{logior}}, {{logxor}}, {{logand}}, {{lognot}}, {{logtest}}, {{logbit?}} {{(logbitp)}}, ash, logcount, and integer-length procedures are from Common-Lisp. {{Logior}}, {{logxor}}, and {{logand}} have been extended to accept any arity. Opportunities to use an n-ary version of {{logtest}} have not been frequent enough to justify its extension.
+The {{logior}}, {{logxor}}, {{logand}}, {{lognot}}, {{logtest}}, {{logbit?}} {{(logbitp)}}, {{ash}}, logcount, and integer-length procedures are from Common-Lisp. {{Logior}}, {{logxor}}, and {{logand}} have been extended to accept any arity. Opportunities to use an n-ary version of {{logtest}} have not been frequent enough to justify its extension.
 
 In the Bitwise Operations, rather than striving for orthogonal completeness, I have concentrated on a nearly minimal set of bitwise logical functions sufficient to support the uses listed above.
 
