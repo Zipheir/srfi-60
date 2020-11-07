@@ -1,4 +1,4 @@
-(use srfi-1 srfi-60 test)
+(import srfi-1 srfi-60 test)
 
 (test-group
  "srfi-60"

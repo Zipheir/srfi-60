@@ -5,5 +5,5 @@
  (category data)
  (license "Artistic")
  (synopsis "Integers as bits")
- (test-dependencies test format)
+ (test-dependencies test srfi-1 format)
  (components (extension srfi-60)))
