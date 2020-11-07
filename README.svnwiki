@@ -237,7 +237,7 @@ Returns an integer the same as from except in the indexth bit, which is 1 if bit
 
 <procedure>bit-field n start end</procedure>
 
-Returns the integer composed of the {{start}} (inclusive) through {{end}} (exclusive) bits of n. The startth bit becomes the 0-th bit in the result.
+Returns the integer composed of the {{start}} (inclusive) through {{end}} (exclusive) bits of {{n}}. The startth bit becomes the 0-th bit in the result.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (bit-field #b1101101010 0 4) 2)
