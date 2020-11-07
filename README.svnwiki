@@ -303,7 +303,7 @@ Returns {{n}} with the order of bits {{start}} to {{end}} reversed.
 
 <procedure>integer->list k</procedure>
 
-{{integer->list}} returns a list of len booleans corresponding to each bit of the non-negative integer k. {{#t}} is coded for each 1; {{#f}} for 0. The len argument defaults to (integer-length k).
+{{integer->list}} returns a list of {{len}} booleans corresponding to each bit of the non-negative integer k. {{#t}} is coded for each 1; {{#f}} for 0. The {{len}} argument defaults to (integer-length k).
 
 <procedure>list->integer list</procedure>
 
