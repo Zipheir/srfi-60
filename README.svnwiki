@@ -264,7 +264,7 @@ Returns an integer the same as to except possibly in the {{start}} (inclusive) t
 
 <procedure>arithmetic-shift n count</procedure>
 
-Returns an integer equivalent to (inexact->exact (floor (* n (expt 2 count)))).
+Returns an integer equivalent to {{(inexact->exact (floor (* n (expt 2 count))))}}.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (ash #b1 3) 2)
