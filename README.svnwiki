@@ -147,7 +147,7 @@ Returns an integer composed of some bits from integer {{n0}} and some from integ
 
 <procedure>bit-count n</procedure>
 
-Returns the number of bits in integer n. If integer is positive, the 1-bits in its binary representation are counted. If negative, the 0-bits in its two's-complement binary representation are counted. If 0, 0 is returned.
+Returns the number of bits in integer {{n}}. If integer is positive, the 1-bits in its binary representation are counted. If negative, the 0-bits in its two's-complement binary representation are counted. If 0, 0 is returned.
 ====== Example:
 <enscript highlight="scheme">
 (logcount #b10101010)
