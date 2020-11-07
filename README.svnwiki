@@ -51,8 +51,7 @@ The SRFI-33 aliases: {{bitwise-ior}}, {{bitwise-xor}}, {{bitwise-and}}, {{bitwis
 === Bit Within Word and Field of Bits
 The ''Bit Within Word and Field of Bits'' procedures are used for modeling digital logic and accessing binary data structures in software.
 
-I have changed to copy-bit-field argument order to be consistent with the other Field of Bits procedures: the {{start}} and {{end}} index arguments are last. This makes them
-analogous to the argument order to substring and SRFI-47 arrays, which took their cue from substring.
+I have changed to copy-bit-field argument order to be consistent with the other Field of Bits procedures: the {{start}} and {{end}} index arguments are last. This makes them analogous to the argument order to substring and SRFI-47 arrays, which took their cue from substring.
 
 These {{start}} and {{end}} index arguments are not compatible with SRFI-33's size and position arguments (occurring first) in its bit-field procedures. Both define
 copy-bit-field; the arguments and purposes being incompatible.
