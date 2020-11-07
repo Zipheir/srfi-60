@@ -24,7 +24,7 @@ A bit-index in these descriptions is nonnegative with the least significant bit 
 
 The reference implementation is written using only Scheme integer operations. Thus the only exposure of the underlying representation is the ranges of fixnums.
 
-The complement describes the representation of negative integers. With one's-complement fixnums, the range of integers is {{-(2^n)}} to {{2^n}}, and there are two possible representations of 0. With two's-complement fixnums, the range of integers is -(2^n+1) to 2^n.
+The complement describes the representation of negative integers. With one's-complement fixnums, the range of integers is {{-(2^n)}} to {{2^n}}, and there are two possible representations of 0. With two's-complement fixnums, the range of integers is {{-(2^n+1)}} to {{2^n}}.
 
 Since we treat integers as having two's-complement negations, the two's-complement of an integer is simply its negation. The one's-complement of an integer is computed by {{lognot}}:
 
