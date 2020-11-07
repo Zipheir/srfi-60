@@ -51,14 +51,14 @@ The SRFI-33 aliases: {{bitwise-ior}}, {{bitwise-xor}}, {{bitwise-and}}, {{bitwis
 === Bit Within Word and Field of Bits
 The ''Bit Within Word and Field of Bits'' procedures are used for modeling digital logic and accessing binary data structures in software.
 
-I have changed to copy-bit-field argument order to be consistent with the other Field of Bits procedures: the {{start}} and end index arguments are last. This makes them
+I have changed to copy-bit-field argument order to be consistent with the other Field of Bits procedures: the {{start}} and {{end}} index arguments are last. This makes them
 analogous to the argument order to substring and SRFI-47 arrays, which took their cue from substring.
 
-These {{start}} and end index arguments are not compatible with SRFI-33's size and position arguments (occurring first) in its bit-field procedures. Both define
+These {{start}} and {{end}} index arguments are not compatible with SRFI-33's size and position arguments (occurring first) in its bit-field procedures. Both define
 copy-bit-field; the arguments and purposes being incompatible.
 
 A procedure in slib/logical.scm, logical:rotate, rotated a given number of low-order bits by a given number of bits. This function was quite servicable, but I could not
-name it adequately. I have replaced it with rotate-bit-field with the addition of a {{start}} argument. This new function rotates a given field (from positions {{start}} to end)
+name it adequately. I have replaced it with rotate-bit-field with the addition of a {{start}} argument. This new function rotates a given field (from positions {{start}} to {{end}})
 within an integer; leaving the rest unchanged.
 
 Another problematic name was logical:ones, which generated an integer with the least significant k bits set. Calls to bit-field could have replaced its uses . But the
@@ -241,7 +241,7 @@ Returns an integer the same as from except in the indexth bit, which is 1 if bit
 
 <procedure>bit-field n start end</procedure>
 
-Returns the integer composed of the {{start}} (inclusive) through end (exclusive) bits of n. The startth bit becomes the 0-th bit in the result.
+Returns the integer composed of the {{start}} (inclusive) through {{end}} (exclusive) bits of n. The startth bit becomes the 0-th bit in the result.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (bit-field #b1101101010 0 4) 2)
@@ -252,7 +252,7 @@ Returns the integer composed of the {{start}} (inclusive) through end (exclusive
 
 <procedure>copy-bit-field to from start end</procedure>
 
-Returns an integer the same as to except possibly in the {{start}} (inclusive) through end (exclusive) bits, which are the same as those of from. The 0-th bit of from becomes the startth bit of the result.
+Returns an integer the same as to except possibly in the {{start}} (inclusive) through {{end}} (exclusive) bits, which are the same as those of from. The 0-th bit of from becomes the startth bit of the result.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (copy-bit-field #b1101101010 0 0 4) 2)
@@ -279,7 +279,7 @@ Returns an integer equivalent to (inexact->exact (floor (* n (expt 2 count)))).
 
 <procedure>rotate-bit-field n count start end</procedure>
 
-Returns n with the bit-field from {{start}} to end cyclically permuted by count bits towards high-order.
+Returns n with the bit-field from {{start}} to {{end}} cyclically permuted by count bits towards high-order.
 ====== Example:
 <enscript highlight="scheme">
 (number->string (rotate-bit-field #b0100 3 0 4) 2)
@@ -294,7 +294,7 @@ Returns n with the bit-field from {{start}} to end cyclically permuted by count 
 
 <procedure>reverse-bit-field n start end</procedure>
 
-Returns n with the order of bits {{start}} to end reversed.
+Returns n with the order of bits {{start}} to {{end}} reversed.
 ====== Example
 <enscript highlight="scheme">
 (number->string (reverse-bit-field #xa7 0 8) 16)
