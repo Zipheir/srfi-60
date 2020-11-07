@@ -11,10 +11,12 @@ Treating integers as two's-complement strings of bits is an arcane but important
 **** packing and unpacking numbers in persistant data structures
 **** space-filling curves with applications to dimension reduction and sparse multi-dimensional database indexes; and
 **** generating approximate seed values for root-finders and transcendental function algorithms.
+*** For more information see:
+[[https://srfi.schemers.org/srfi-60/][SRFI 60: Integers as Bits]]
 ** Rationale
-This proposal describes the SLIB module logical, which has been used for those purposes listed above.
+This proposal describes the [[http://swiss.csail.mit.edu/~jaffer/SLIB][SLIB]] module [[http://swiss.csail.mit.edu/~jaffer/slib_5.html#SEC88][logical]], which has been used for those purposes listed above.
 
-The discussions of the withdrawn SRFI-33: "Integer Bitwise-operation Library" seemed to founder on consistency of procedure names and arity; and on perceived competition with the boolean arrays of SRFI-47.
+The discussions of the withdrawn [[https://srfi.schemers.org/srfi-33/][SRFI-33: "Integer Bitwise-operation Library"]] seemed to founder on consistency of procedure names and arity; and on perceived competition with the boolean arrays of SRFI-47.
 
 I have implemented both logical number operations and boolean arrays; and have not been conflicted as to their application. I used boolean arrays to construct very fast indexes for database tables having millions of records. To avoid running out of RAM, creation of megabit arrays should be explicit; so the boolean array procedures put their results into a passed array. In contrast, these procedures are purely functional.
 ** Bits and Complements
@@ -68,7 +70,7 @@ definition was so short that I just replaced its uses with:
 
 The bit-reverse procedure was then the only one which took a width argument. So I replaced it with reverse-bit-field.
 
-The Lamination and Gray-code functions were moved to slib/phil-spc.scm
+The Lamination and Gray-code functions were moved to [[http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/slib/slib/phil-spc.scm?rev=HEAD&content-type=text/vnd.viewcvs-markup][slib/phil-spc.scm]]
 ** Bits as Booleans
 Bits as Booleans provides the procedures to convert between integers and lists of booleans. There is no comparable facility in SRFI-33.
 ** Specification
@@ -257,7 +259,7 @@ integer->list and list->integer are inverses so far as equal? is concerned.
 **** Function: booleans->integer bool1 ...
 Returns the integer coded by the bool1 ... arguments.
 ** Implementation
-slib/logical.scm implements the integers-as-bits procedures for R4RS or R5RS compliant Scheme implementations.
+[[http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/slib/slib/logical.scm?rev=HEAD&content-type=text/vnd.viewcvs-markup][slib/logical.scm]] implements the integers-as-bits procedures for R4RS or R5RS compliant Scheme implementations.
 
 #+BEGIN_SRC scheme
 ;;;; "logical.scm", bit access and operations for integers for Scheme
