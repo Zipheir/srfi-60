@@ -40,7 +40,7 @@ Although any two of {{logior}}, {{logxor}}, and {{logand}} (in combination with 
 
 {{bitwise-if}} is what SRFI-33 calls {{bitwise-merge}}.
 
-The SRFI-33 aliases: {{bitwise-ior}}, {{bitwise-xor}}, {{bitwise-and}}, bitwise-not, {{bitwise-merge}}, any-bits-set?, and bit-count are also provided.
+The SRFI-33 aliases: {{bitwise-ior}}, {{bitwise-xor}}, {{bitwise-and}}, {{bitwise-not}}, {{bitwise-merge}}, any-bits-set?, and bit-count are also provided.
 
 log2-binary-factors (alias first-set-bit) is a useful function which is simple but non-obvious:
 
