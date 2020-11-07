@@ -1,0 +1,9 @@
+# -*- mode: org; -*-
+* TODO lognot/bitwise-not
+  a bug in chicken's handling of negative binary, octal, hexadecimals
+  causes these tests to fail
+* TODO untested functions
+  - bitwise-if/bitwise-merge
+  - integer->list
+  - list->integer
+  - booleans->integer
