@@ -64,7 +64,7 @@ Another problematic name was {{logical:ones}}, which generated an integer with t
 (lognot (ash -1 k))
 </enscript>
 
-The bit-reverse procedure was then the only one which took a width argument. So I replaced it with reverse-bit-field.
+The {{bit-reverse}} procedure was then the only one which took a width argument. So I replaced it with {{reverse-bit-field}}.
 
 The Lamination and Gray-code functions were moved to [[http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/slib/slib/phil-spc.scm?rev=HEAD&content-type=text/vnd.viewcvs-markup|slib/phil-spc.scm]]
 === Bits as Booleans
