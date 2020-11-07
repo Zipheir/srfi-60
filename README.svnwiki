@@ -127,7 +127,7 @@ Returns the integer which is the ```one's-complement``` of the integer argument.
 
 <procedure>bitwise-merge mask n0 n1</procedure>
 
-Returns an integer composed of some bits from integer n0 and some from integer {{n1}}. A bit of the result is taken from n0 if the corresponding bit of integer mask is 1 and from {{n1}} if that bit of mask is 0.
+Returns an integer composed of some bits from integer {{n0}} and some from integer {{n1}}. A bit of the result is taken from {{n0}} if the corresponding bit of integer mask is 1 and from {{n1}} if that bit of mask is 0.
 
 <procedure>logtest j k</procedure>
 
