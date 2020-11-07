@@ -313,7 +313,7 @@ Returns {{n}} with the order of bits {{start}} to {{end}} reversed.
 
 <procedure>booleans->integer bool1 ...</procedure>
 
-Returns the integer coded by the bool1 ... arguments.
+Returns the integer coded by the {{bool1}} ... arguments.
 === Implementation
 [[http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/slib/slib/logical.scm?rev=HEAD&content-type=text/vnd.viewcvs-markup|slib/logical.scm]] implements the integers-as-bits procedures for R4RS or R5RS compliant Scheme implementations.
 === Author
