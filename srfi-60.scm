@@ -27,6 +27,7 @@ bit-set? copy-bit bit-field copy-bit-field ash arithmetic-shift
 rotate-bit-field reverse-bit-field integer->list list->integer)
 
 (import scheme)
+(import (chicken bitwise))
 
 (define logical:boole-xor
  '#(#(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
@@ -76,60 +77,6 @@ rotate-bit-field reverse-bit-field integer->list list->integer)
 	((null? rgs) res))))
 
 ;@
-(define logand
-  (letrec
-      ((lgand
-	(lambda (n2 n1 scl acc)
-	  (cond ((= n1 n2) (+ acc (* scl n1)))
-		((zero? n2) acc)
-		((zero? n1) acc)
-		(else (lgand (logical:ash-4 n2)
-			     (logical:ash-4 n1)
-			     (* 16 scl)
-			     (+ (* (vector-ref (vector-ref logical:boole-and
-							   (modulo n1 16))
-					       (modulo n2 16))
-				   scl)
-				acc)))))))
-    (logical:reduce lgand -1)))
-;@
-(define logior
-  (letrec
-      ((lgior
-	(lambda (n2 n1 scl acc)
-	  (cond ((= n1 n2) (+ acc (* scl n1)))
-		((zero? n2) (+ acc (* scl n1)))
-		((zero? n1) (+ acc (* scl n2)))
-		(else (lgior (logical:ash-4 n2)
-			     (logical:ash-4 n1)
-			     (* 16 scl)
-			     (+ (* (- 15 (vector-ref
-					  (vector-ref logical:boole-and
-						      (- 15 (modulo n1 16)))
-					  (- 15 (modulo n2 16))))
-				   scl)
-				acc)))))))
-    (logical:reduce lgior 0)))
-;@
-(define logxor
-  (letrec
-      ((lgxor
-	(lambda (n2 n1 scl acc)
-	  (cond ((= n1 n2) acc)
-		((zero? n2) (+ acc (* scl n1)))
-		((zero? n1) (+ acc (* scl n2)))
-		(else (lgxor (logical:ash-4 n2)
-			     (logical:ash-4 n1)
-			     (* 16 scl)
-			     (+ (* (vector-ref (vector-ref logical:boole-xor
-							   (modulo n1 16))
-					       (modulo n2 16))
-				   scl)
-				acc)))))))
-    (logical:reduce lgxor 0)))
-;@
-(define (lognot n) (- -1 n))
-;@
 (define (logtest n1 n2)
   (not (zero? (logand n1 n2))))
 ;@
@@ -164,24 +111,6 @@ rotate-bit-field reverse-bit-field integer->list list->integer)
 		     (arithmetic-shift zn (- count width)))
 	     start)
 	    (logand (lognot (ash mask start)) n))))
-;@
-(define (arithmetic-shift n count)
-  (if (negative? count)
-      (let ((k (expt 2 (- count))))
-	(if (negative? n)
-	    (+ -1 (quotient (+ 1 n) k))
-	    (quotient n k)))
-      (* (expt 2 count) n)))
-;@
-(define integer-length
-  (letrec ((intlen (lambda (n tot)
-		     (case n
-		       ((0 -1) (+ 0 tot))
-		       ((1 -2) (+ 1 tot))
-		       ((2 3 -3 -4) (+ 2 tot))
-		       ((4 5 6 7 -5 -6 -7 -8) (+ 3 tot))
-		       (else (intlen (logical:ash-4 n) (+ 4 tot)))))))
-    (lambda (n) (intlen n 0))))
 ;@
 (define bitwise-bit-count
   (letrec ((logcnt (lambda (n tot)
@@ -236,10 +165,10 @@ rotate-bit-field reverse-bit-field integer->list list->integer)
 
 ;;;;@ SRFI-60 aliases
 (define ash arithmetic-shift)
-(define bitwise-ior logior)
-(define bitwise-xor logxor)
-(define bitwise-and logand)
-(define bitwise-not lognot)
+(define logior bitwise-ior)
+(define logxor bitwise-xor)
+(define logand bitwise-and)
+(define lognot bitwise-not)
 (define bit-count logcount)
 (define bit-set?   logbit?)
 (define any-bits-set? logtest)
