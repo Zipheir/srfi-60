@@ -31,7 +31,10 @@
 (import scheme
   (chicken base)
   (chicken bitwise)
+  (chicken platform)
   bitwise-utils)
+
+(register-feature! 'srfi-60)
 
 (define logand              bitwise-and)
 (define logior              bitwise-ior)
