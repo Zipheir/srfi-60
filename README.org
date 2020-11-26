@@ -1,4 +1,4 @@
-* Integers as Bits
+* SRFI-60: Integers as Bits
 ** Abstract
 Treating integers as two's-complement strings of bits is an arcane but important domain of computer science.
 *** It is used for:
