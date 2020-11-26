@@ -319,7 +319,7 @@ Returns the integer coded by the {{bool1}} ... arguments.
 === Author
 * Aubrey Jaffer
 * Ported to hygienic Chicken 3 with test suite by Peter Danenberg
-* Ported to Chicken 4 by Sergey Goldgaber
+* Ported to Chicken 5 by Sergey Goldgaber
 === Copyright
 Copyright (C) Aubrey Jaffer (2004, 2005). All Rights Reserved.
 
