@@ -6,5 +6,5 @@
  (license "Artistic")
  (synopsis "Integers as bits")
  (dependencies bitwise-utils)
- (test-dependencies test srfi-1 format)
+ (test-dependencies test srfi-1)
  (components (extension srfi-60)))
