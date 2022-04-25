@@ -3,7 +3,7 @@
 ((author "Aubrey Jaffer")
  (maintainer "Sergey Goldgaber")
  (category data)
- (license "Artistic")
+ (license "MIT")
  (synopsis "Integers as bits")
  (dependencies bitwise-utils)
  (test-dependencies test srfi-1)
