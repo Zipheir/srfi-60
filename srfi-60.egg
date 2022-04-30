@@ -1,10 +1,10 @@
 ;;; srfi-60.egg -*- Scheme -*- vim: ft=scheme:
 
 ((author "Aubrey Jaffer")
- (maintainer "Sergey Goldgaber")
+ (maintainer "Wolfgang Corcoran-Mathe")
  (category data)
  (license "MIT")
- (synopsis "Integers as bits")
+ (synopsis "SRFI 60: Integers as bits")
  (dependencies bitwise-utils)
  (test-dependencies test srfi-1)
- (components (extension srfi-60)))
+ (components (extension (srfi 60))))
