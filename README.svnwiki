@@ -1,337 +1,310 @@
-== SRFI-60: Integers as Bits
-=== Abstract
-Treating integers as two's-complement strings of bits is an arcane but important domain of computer science.
-==== It is used for:
-* hashing
-* Galois-field[2] calculations of error-detecting and error-correcting codes
-* cryptography and ciphers
-* pseudo-random number generation
-* register-transfer-level modeling of digital logic designs
-* Fast-Fourier transforms
-* packing and unpacking numbers in persistant data structures
-* space-filling curves with applications to dimension reduction and sparse multi-dimensional database indexes; and
-* generating approximate seed values for root-finders and transcendental function algorithms.
-==== For more information see:
-[[https://srfi.schemers.org/srfi-60/|SRFI 60: Integers as Bits]]
-=== Rationale
-This proposal describes the [[http://swiss.csail.mit.edu/~jaffer/SLIB|SLIB]] module [[http://swiss.csail.mit.edu/~jaffer/slib_5.html#SEC88|logical]], which has been used for those purposes listed above.
+== SRFI 60: Integers as Bits
 
-The discussions of the withdrawn [[https://srfi.schemers.org/srfi-33/|SRFI-33: "Integer Bitwise-operation Library"]] seemed to founder on consistency of procedure names and arity; and on perceived competition with the boolean arrays of SRFI-47.
+This egg provides the SRFI 60 bitwise library, implemented as a very
+thin wrapper on top of [[bitwise-utils]].  Every form that appears here
+can be found in bitwise-utils under a different name, and [[srfi-151]]
+provides many operations not found in either egg.  There's not much reason
+to use this library.
 
-I have implemented both logical number operations and boolean arrays; and have not been conflicted as to their application. I used boolean arrays to construct very fast indexes for database tables having millions of records. To avoid running out of RAM, creation of megabit arrays should be explicit; so the boolean array procedures put their results into a passed array. In contrast, these procedures are purely functional.
-=== Bits and Complements
-A bit-index in these descriptions is nonnegative with the least significant bit at index 0. A positive integer has a finite number of "1" bits. A negative integer has a finite number of "0" bits.
+[[toc:]]
 
-The reference implementation is written using only Scheme integer operations. Thus the only exposure of the underlying representation is the ranges of fixnums.
+== SRFI description
 
-The complement describes the representation of negative integers. With one's-complement fixnums, the range of integers is {{-(2^n)}} to {{2^n}}, and there are two possible representations of 0. With two's-complement fixnums, the range of integers is {{-(2^n+1)}} to {{2^n}}.
+This page is intended to document the forms provided by this egg.
+For a full description of SRFI 60, see
+[[https://srfi.schemers.org/srfi-60/|the SRFI document]].
 
-Since we treat integers as having two's-complement negations, the two's-complement of an integer is simply its negation. The one's-complement of an integer is computed by {{lognot}}:
+== Specification
 
-<enscript highlight="scheme">
-(define (lognot n) (- -1 n))
-</enscript>
-=== Bitwise Operations and Integer Properties
-The {{logior}}, {{logxor}}, {{logand}}, {{lognot}}, {{logtest}}, {{logbit?}} {{(logbitp)}}, {{ash}}, {{logcount}}, and integer-length procedures are from Common-Lisp. {{Logior}}, {{logxor}}, and {{logand}} have been extended to accept any arity. Opportunities to use an n-ary version of {{logtest}} have not been frequent enough to justify its extension.
+=== Bitwise Operations
 
-In the ```Bitwise Operations```, rather than striving for orthogonal completeness, I have concentrated on a nearly minimal set of bitwise logical functions sufficient to support the uses listed above.
+<procedure>(logand n1 ...)</procedure>
+<procedure>(bitwise-and n1 ...)</procedure>
 
-Although any two of {{logior}}, {{logxor}}, and {{logand}} (in combination with {{lognot}}) are sufficient to generate all the two-input logic functions, having these three means that any nontrivial two-input logical function can be synthesized using just one of these two-input primaries with zero or one calls to {{lognot}}.
+Returns the integer which is the bit-wise AND of the integer arguments.
 
-{{bitwise-if}} is what SRFI-33 calls {{bitwise-merge}}.
+Example:
 
-The SRFI-33 aliases: {{bitwise-ior}}, {{bitwise-xor}}, {{bitwise-and}}, {{bitwise-not}}, {{bitwise-merge}}, {{any-bits-set?}}, and {{bit-count}} are also provided.
-
-{{log2-binary-factors}} (alias {{first-set-bit}}) is a useful function which is simple but non-obvious:
-
-<enscript highlight="scheme">
-(define (log2-binary-factors n)
-  (+ -1 (integer-length (logand n (- n)))))
-</enscript>
-=== Bit Within Word and Field of Bits
-The ''Bit Within Word and Field of Bits'' procedures are used for modeling digital logic and accessing binary data structures in software.
-
-I have changed to copy-bit-field argument order to be consistent with the other Field of Bits procedures: the {{start}} and {{end}} index arguments are last. This makes them analogous to the argument order to substring and SRFI-47 arrays, which took their cue from substring.
-
-These {{start}} and {{end}} index arguments are not compatible with SRFI-33's size and position arguments (occurring first) in its bit-field procedures. Both define
-copy-bit-field; the arguments and purposes being incompatible.
-
-A procedure in {{slib/logical.scm}}, {{logical:rotate}}, rotated a given number of low-order bits by a given number of bits. This function was quite servicable, but I could not name it adequately. I have replaced it with rotate-bit-field with the addition of a {{start}} argument. This new function rotates a given field (from positions {{start}} to {{end}}) within an integer; leaving the rest unchanged.
-
-Another problematic name was {{logical:ones}}, which generated an integer with the least significant {{k}} bits set. Calls to bit-field could have replaced its uses . But the definition was so short that I just replaced its uses with:
-
-<enscript highlight="scheme">
-(lognot (ash -1 k))
-</enscript>
-
-The {{bit-reverse}} procedure was then the only one which took a width argument. So I replaced it with {{reverse-bit-field}}.
-
-The Lamination and Gray-code functions were moved to [[http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/slib/slib/phil-spc.scm?rev=HEAD&content-type=text/vnd.viewcvs-markup|slib/phil-spc.scm]]
-=== Bits as Booleans
-Bits as Booleans provides the procedures to convert between integers and lists of booleans. There is no comparable facility in SRFI-33.
-=== Specification
-==== Bitwise Operations
-
-<procedure>logand n1 ...</procedure>
-
-
-<procedure>bitwise-and n1 ...</procedure>
-
-Returns the integer which is the bit-wise ```AND``` of the integer arguments.
-====== Example:
 <enscript highlight="scheme">
 (number->string (logand #b1100 #b1010) 2)
-    => "1000"
+    ; => "1000"
 </enscript>
 
-<procedure>logior n1 ...</procedure>
+<procedure>(logior n1 ...)</procedure>
+<procedure>(bitwise-ior n1 ...)</procedure>
 
+Returns the integer which is the bit-wise OR of the integer arguments.
 
-<procedure>bitwise-ior n1 ...</procedure>
+Example:
 
-Returns the integer which is the bit-wise ```OR``` of the integer arguments.
-====== Example:
 <enscript highlight="scheme">
 (number->string (logior #b1100 #b1010) 2)
-    => "1110"
+    ; => "1110"
 </enscript>
 
-<procedure>logxor n1 ...</procedure>
+<procedure>(logxor n1 ...)</procedure>
+<procedure>(bitwise-xor n1 ...)</procedure>
 
+Returns the integer which is the bit-wise XOR of the integer arguments.
 
-<procedure>bitwise-xor n1 ...</procedure>
+Example:
 
-Returns the integer which is the bit-wise ```XOR``` of the integer arguments.
-====== Example:
 <enscript highlight="scheme">
 (number->string (logxor #b1100 #b1010) 2)
-    => "110"
+    ; => "110"
 </enscript>
 
-<procedure>lognot n</procedure>
+<procedure>(lognot n)</procedure>
+<procedure>(bitwise-not n)</procedure>
 
+Returns the integer which is the one's-complement of the integer argument.
 
-<procedure>bitwise-not n</procedure>
+Example:
 
-Returns the integer which is the ```one's-complement``` of the integer argument.
-====== Example:
 <enscript highlight="scheme">
 (number->string (lognot #b10000000) 2)
-    => "-10000001"
+    ; => "-10000001"
 (number->string (lognot #b0) 2)
-    => "-1"
+    ; => "-1"
 </enscript>
 
-<procedure>bitwise-if mask n0 n1</procedure>
+<procedure>(bitwise-if mask n0 n1)</procedure>
+<procedure>(bitwise-merge mask n0 n1)</procedure>
 
+Returns an integer composed of some bits from integer ''n0'' and some
+from integer ''n1''. A bit of the result is taken from ''n0'' if the
+corresponding bit of integer mask is 1 and from ''n1'' if that bit of
+mask is 0.
 
-<procedure>bitwise-merge mask n0 n1</procedure>
-
-Returns an integer composed of some bits from integer {{n0}} and some from integer {{n1}}. A bit of the result is taken from {{n0}} if the corresponding bit of integer mask is 1 and from {{n1}} if that bit of mask is 0.
-
-<procedure>logtest j k</procedure>
-
-
-<procedure>any-bits-set? j k</procedure>
+<procedure>(logtest j k)</procedure>
+<procedure>(any-bits-set? j k)</procedure>
 
 <enscript highlight="scheme">
 (logtest j k) == (not (zero? (logand j k)))
 
-(logtest #b0100 #b1011) => #f
-(logtest #b0100 #b0111) => #t
+(logtest #b0100 #b1011) ; => #f
+(logtest #b0100 #b0111) ; => #t
 </enscript>
-==== Integer Properties
 
-<procedure>logcount n</procedure>
+=== Integer Properties
 
+<procedure>(logcount n)</procedure>
+<procedure>(bit-count n)</procedure>
 
-<procedure>bit-count n</procedure>
+Returns the number of bits in integer ''n''. If integer is positive,
+the 1-bits in its binary representation are counted. If negative, the
+0-bits in its two's-complement binary representation are counted. If 0,
+0 is returned.
 
-Returns the number of bits in integer {{n}}. If integer is positive, the 1-bits in its binary representation are counted. If negative, the 0-bits in its two's-complement binary representation are counted. If 0, 0 is returned.
-====== Example:
+Example:
+
 <enscript highlight="scheme">
 (logcount #b10101010)
-    => 4
+   ; => 4
 (logcount 0)
-    => 0
+   ; => 0
 (logcount -2)
-    => 1
+   ; => 1
 </enscript>
 
-<procedure>integer-length n</procedure>
+<procedure>(integer-length n)</procedure>
 
-Returns the number of bits neccessary to represent {{n}}.
-====== Example:
+Returns the number of bits neccessary to represent ''n''.
+
+Example:
+
 <enscript highlight="scheme">
 (integer-length #b10101010)
-    => 8
+   ; => 8
 (integer-length 0)
-    => 0
+   ; => 0
 (integer-length #b1111)
-    => 4
+   ; => 4
 </enscript>
 
-<procedure>log2-binary-factors n</procedure>
+<procedure>(log2-binary-factors n)</procedure>
+<procedure>(first-set-bit n)</procedure>
 
+Returns the number of factors of two of integer ''n''. This value is
+also the bit-index of the least-significant 1-bit in ''n''.
 
-<procedure>first-set-bit n</procedure>
-
-Returns the number of factors of two of integer {{n}}. This value is also the bit-index of the least-significant `1' bit in {{n}}.
-====== Example
-<enscript highlight="scheme">
-(require 'printf)
-(do ((idx 0 (+ 1 idx)))
-      ((> idx 16))
-    (printf "%s(%3d) ==> %-5d %s(%2d) ==> %-5d\n"
-            'log2-binary-factors
-            (- idx) (log2-binary-factors (- idx))
-            'log2-binary-factors
-            idx (log2-binary-factors idx)))
--|
-log2-binary-factors(  0) ==> -1    log2-binary-factors( 0) ==> -1
-log2-binary-factors( -1) ==> 0     log2-binary-factors( 1) ==> 0
-log2-binary-factors( -2) ==> 1     log2-binary-factors( 2) ==> 1
-log2-binary-factors( -3) ==> 0     log2-binary-factors( 3) ==> 0
-log2-binary-factors( -4) ==> 2     log2-binary-factors( 4) ==> 2
-log2-binary-factors( -5) ==> 0     log2-binary-factors( 5) ==> 0
-log2-binary-factors( -6) ==> 1     log2-binary-factors( 6) ==> 1
-log2-binary-factors( -7) ==> 0     log2-binary-factors( 7) ==> 0
-log2-binary-factors( -8) ==> 3     log2-binary-factors( 8) ==> 3
-log2-binary-factors( -9) ==> 0     log2-binary-factors( 9) ==> 0
-log2-binary-factors(-10) ==> 1     log2-binary-factors(10) ==> 1
-log2-binary-factors(-11) ==> 0     log2-binary-factors(11) ==> 0
-log2-binary-factors(-12) ==> 2     log2-binary-factors(12) ==> 2
-log2-binary-factors(-13) ==> 0     log2-binary-factors(13) ==> 0
-log2-binary-factors(-14) ==> 1     log2-binary-factors(14) ==> 1
-log2-binary-factors(-15) ==> 0     log2-binary-factors(15) ==> 0
-log2-binary-factors(-16) ==> 4     log2-binary-factors(16) ==> 4
-</enscript>
 ==== Bit Within Word
 
-<procedure>logbit? index n</procedure>
+<procedure>(logbit? index n)</procedure>
+<procedure>(bit-set? index n)</procedure>
 
+Example:
 
-<procedure>bit-set? index n</procedure>
-
-====== Example
 <enscript highlight="scheme">
 (logbit? index n) == (logtest (expt 2 index) n)
 
-(logbit? 0 #b1101) => #t
-(logbit? 1 #b1101) => #f
-(logbit? 2 #b1101) => #t
-(logbit? 3 #b1101) => #t
-(logbit? 4 #b1101) => #f
+(logbit? 0 #b1101) ; => #t
+(logbit? 1 #b1101) ; => #f
+(logbit? 2 #b1101) ; => #t
+(logbit? 3 #b1101) ; => #t
+(logbit? 4 #b1101) ; => #f
 </enscript>
 
-<procedure>copy-bit index from bit</procedure>
+<procedure>(copy-bit index from bit)</procedure>
 
-Returns an integer the same as from except in the indexth bit, which is 1 if bit is {{#t}} and 0 if bit is {{#f}}.
-====== Example:
+Returns an integer the same as from except in the indexth bit,
+which is 1 if ''bit'' is {{#t}} and 0 if ''bit'' is {{#f}}.
+
+Example:
+
 <enscript highlight="scheme">
-(number->string (copy-bit 0 0 #t) 2)       => "1"
-(number->string (copy-bit 2 0 #t) 2)       => "100"
-(number->string (copy-bit 2 #b1111 #f) 2)  => "1011"
+(number->string (copy-bit 0 0 #t) 2)      ; => "1"
+(number->string (copy-bit 2 0 #t) 2)      ; => "100"
+(number->string (copy-bit 2 #b1111 #f) 2) ; => "1011"
 </enscript>
+
 ==== Field of Bits
 
-<procedure>bit-field n start end</procedure>
+<procedure>(bit-field n start end)</procedure>
 
-Returns the integer composed of the {{start}} (inclusive) through {{end}} (exclusive) bits of {{n}}. The startth bit becomes the 0-th bit in the result.
-====== Example:
+Returns the integer composed of the ''start'' (inclusive) through
+''end'' (exclusive) bits of ''n''. The ''start''th bit becomes the
+0-th bit in the result.
+
+Example:
+
 <enscript highlight="scheme">
 (number->string (bit-field #b1101101010 0 4) 2)
-    => "1010"
+   ; => "1010"
 (number->string (bit-field #b1101101010 4 9) 2)
-    => "10110"
+   ; => "10110"
 </enscript>
 
-<procedure>copy-bit-field to from start end</procedure>
+<procedure>(copy-bit-field to from start end)</procedure>
 
-Returns an integer the same as to except possibly in the {{start}} (inclusive) through {{end}} (exclusive) bits, which are the same as those of from. The 0-th bit of from becomes the startth bit of the result.
-====== Example:
+Returns an integer the same as to except possibly in the ''start''
+(inclusive) through ''end'' (exclusive) bits, which are the same
+as those of from. The 0-th bit of from becomes the ''start''th bit
+of the result.
+
+Example:
+
 <enscript highlight="scheme">
 (number->string (copy-bit-field #b1101101010 0 0 4) 2)
-    => "1101100000"
+   ; => "1101100000"
 (number->string (copy-bit-field #b1101101010 -1 0 4) 2)
-    => "1101101111"
+   ; => "1101101111"
 (number->string (copy-bit-field #b110100100010000 -1 5 9) 2)
-    => "110100111110000"
+   ; => "110100111110000"
 </enscript>
 
-<procedure>ash n count</procedure>
+<procedure>(ash n count)</procedure>
+<procedure>(arithmetic-shift n count)</procedure>
 
+Returns an integer equivalent to
+{{(inexact->exact (floor (* n (expt 2 count))))}}.
 
-<procedure>arithmetic-shift n count</procedure>
+Example:
 
-Returns an integer equivalent to {{(inexact->exact (floor (* n (expt 2 count))))}}.
-====== Example:
 <enscript highlight="scheme">
 (number->string (ash #b1 3) 2)
-    => "1000"
+   ; => "1000"
 (number->string (ash #b1010 -1) 2)
-    => "101"
+   ; => "101"
 </enscript>
 
-<procedure>rotate-bit-field n count start end</procedure>
+<procedure>(rotate-bit-field n count start end)</procedure>
 
-Returns {{n}} with the bit-field from {{start}} to {{end}} cyclically permuted by count bits towards high-order.
-====== Example:
+Returns ''n'' with the bit-field from ''start'' to ''end'' cyclically
+permuted by count bits towards high-order.
+
+Example:
+
 <enscript highlight="scheme">
 (number->string (rotate-bit-field #b0100 3 0 4) 2)
-    => "10"
+   ; => "10"
 (number->string (rotate-bit-field #b0100 -1 0 4) 2)
-    => "10"
+   ; => "10"
 (number->string (rotate-bit-field #b110100100010000 -1 5 9) 2)
-    => "110100010010000"
+   ; => "110100010010000"
 (number->string (rotate-bit-field #b110100100010000 1 5 9) 2)
-    => "110100000110000"
+   ; => "110100000110000"
 </enscript>
 
-<procedure>reverse-bit-field n start end</procedure>
+<procedure>(reverse-bit-field n start end)</procedure>
 
-Returns {{n}} with the order of bits {{start}} to {{end}} reversed.
-====== Example
+Returns ''n'' with the order of bits ''start'' to ''end'' reversed.
+
+Example:
+
 <enscript highlight="scheme">
 (number->string (reverse-bit-field #xa7 0 8) 16)
-    => "e5"
+   ; => "e5"
 </enscript>
-==== Bits as Booleans
 
-<procedure>integer->list k len</procedure>
+=== Bits as Booleans
 
+<procedure>(integer->list k len)</procedure>
+<procedure>(integer->list k)</procedure>
 
-<procedure>integer->list k</procedure>
+{{integer->list}} returns a list of ''len'' booleans corresponding to
+each bit of the non-negative integer ''k''. {{#t}} is coded for each 1;
+{{#f}} for 0. The ''len'' argument defaults to {{(integer-length k)}}
 
-{{integer->list}} returns a list of {{len}} booleans corresponding to each bit of the non-negative integer {{k}}. {{#t}} is coded for each 1; {{#f}} for 0. The {{len}} argument defaults to (integer-length {{k}}).
+<procedure>(list->integer list)</procedure>
 
-<procedure>list->integer list</procedure>
+{{list->integer}} returns an integer formed from the booleans in the list
+list, which must be a list of booleans. A 1 bit is coded for each {{#t}};
+a 0 bit for {{#f}}.
 
-{{list->integer}} returns an integer formed from the booleans in the list list, which must be a list of booleans. A 1 bit is coded for each {{#t}}; a 0 bit for {{#f}}.
+{{integer->list}} and {{list->integer}} are inverses so far as {{equal?}}
+is concerned.
 
-{{integer->list}} and {{list->integer}} are inverses so far as equal? is concerned.
+<procedure>(booleans->integer bool1 ...)</procedure>
 
-<procedure>booleans->integer bool1 ...</procedure>
+Returns the integer coded by the ''bool1'' ... arguments.
 
-Returns the integer coded by the {{bool1}} ... arguments.
-=== Implementation
-[[http://savannah.gnu.org/cgi-bin/viewcvs/*checkout*/slib/slib/logical.scm?rev=HEAD&content-type=text/vnd.viewcvs-markup|slib/logical.scm]] implements the integers-as-bits procedures for R4RS or R5RS compliant Scheme implementations.
+== About this egg
+
 === Author
-* Aubrey Jaffer
-* Ported to hygienic Chicken 3 with test suite by Peter Danenberg
-* Ported to Chicken 5 by Sergey Goldgaber
-=== Copyright
+
+Aubrey Jaffer
+
+Originally ported to hygienic Chicken 3 with test suite by
+Peter Danenberg.  Ported to Chicken 5 by Sergey Goldgaber.
+
+=== Maintainer
+
+Wolfgang Corcoran-Mathe
+
+Contact: {{wcm at sigwinch dot xyzzy minus the zy}}
+
+=== Repository
+
+[[https://github.com/Zipheir/srfi-60|GitHub]]
+
+=== Version history
+
+; 0.7 : Registered the srfi-60 feature, linked to source code
+; 0.6 : Replaced srfi-60 implementation with that from bitwise-utils
+; 0.5 : Using (chicken bitwise) procedures, where possible
+; 0.4 : Ported to Chicken 5
+; 0.3 : release version 0.3
+; 0.2 : adopting trunk/tags directory layout.  Tagging version 0.2.
+
+=== License
+
 Copyright (C) Aubrey Jaffer (2004, 2005). All Rights Reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the "Software"),
+to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-=== Version history
-*  [[https://github.com/diamond-lizard/srfi-60/releases/tag/0.7|0.7]] - Registered the srfi-60 feature, linked to source code
-*  [[https://github.com/diamond-lizard/srfi-60/releases/tag/0.6|0.6]] - Replaced srfi-60 implementation with that from bitwise-utils
-*  [[https://github.com/diamond-lizard/srfi-60/releases/tag/0.5|0.5]] - Using (chicken bitwise) procedures, where possible
-*  [[https://github.com/diamond-lizard/srfi-60/releases/tag/0.4|0.4]] - Ported to Chicken 5
-* 0.3 - release version 0.3
-* 0.2 - adopting trunk/tags directory layout.  Tagging version 0.2.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
