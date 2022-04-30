@@ -128,7 +128,7 @@ Example:
 Returns the number of factors of two of integer ''n''. This value is
 also the bit-index of the least-significant 1-bit in ''n''.
 
-==== Bit Within Word
+=== Bit Within Word
 
 <procedure>(logbit? index n)</procedure>
 <procedure>(bit-set? index n)</procedure>
@@ -158,7 +158,7 @@ Example:
 (number->string (copy-bit 2 #b1111 #f) 2) ; => "1011"
 </enscript>
 
-==== Field of Bits
+=== Field of Bits
 
 <procedure>(bit-field n start end)</procedure>
 
