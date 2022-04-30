@@ -79,6 +79,8 @@ mask is 0.
 <procedure>(logtest j k)</procedure>
 <procedure>(any-bits-set? j k)</procedure>
 
+Example:
+
 <enscript highlight="scheme">
 (logtest j k) == (not (zero? (logand j k)))
 
