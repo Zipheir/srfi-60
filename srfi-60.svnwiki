@@ -3,8 +3,8 @@
 This egg provides the SRFI 60 bitwise library, implemented as a very
 thin wrapper on top of [[bitwise-utils]].  Every form that appears here
 can be found in bitwise-utils under a different name, and [[srfi-151]]
-provides many operations not found in either egg.  There's not much reason
-to use this library.
+(the successor to SRFI 60) provides many operations not found in either
+egg.  There's not much reason to use this library.
 
 [[toc:]]
 
