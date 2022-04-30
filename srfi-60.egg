@@ -7,4 +7,4 @@
  (synopsis "SRFI 60: Integers as bits")
  (dependencies bitwise-utils)
  (test-dependencies test srfi-1)
- (components (extension (srfi 60))))
+ (components (extension srfi-60)))
