@@ -280,6 +280,7 @@ Contact: {{wcm at sigwinch dot xyzzy minus the zy}}
 
 === Version history
 
+; 0.7.1 : Change maintainer, tidy tests and wiki page.
 ; 0.7 : Registered the srfi-60 feature, linked to source code
 ; 0.6 : Replaced srfi-60 implementation with that from bitwise-utils
 ; 0.5 : Using (chicken bitwise) procedures, where possible
